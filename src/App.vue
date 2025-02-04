@@ -1,14 +1,18 @@
 <template>
+  <TheHeader />
   <RouterView />
 </template>
 
 <script>
 import { RouterView } from 'vue-router';
 
+import TheHeader from './components/layout/TheHeader.vue';
+
 export default {
   name: 'App',
   components: {
     RouterView,
+    TheHeader,
   },
 };
 </script>
