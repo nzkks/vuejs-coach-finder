@@ -1,7 +1,14 @@
-<template><h1>Vuejs Coach Finder</h1></template>
+<template>
+  <RouterView />
+</template>
 
 <script>
+import { RouterView } from 'vue-router';
+
 export default {
   name: 'App',
+  components: {
+    RouterView,
+  },
 };
 </script>
