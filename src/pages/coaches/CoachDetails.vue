@@ -11,4 +11,5 @@ export default {
 <template>
   <h1>Coach Details</h1>
   <RouterView />
+  <router-link to="/coaches/c1/contact">Contact</router-link>
 </template>
