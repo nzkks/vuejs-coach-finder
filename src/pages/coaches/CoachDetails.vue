@@ -1,15 +1,65 @@
-<script>
-import { RouterView } from 'vue-router';
+<template>
+  <section>
+    <base-card>
+      <h2>{{ fullName }}</h2>
+      <h3>${{ rate }}/hour</h3>
+    </base-card>
+  </section>
+  <section>
+    <base-card>
+      <header>
+        <h2>Interested? Reach out now!</h2>
+        <base-button link :to="coachContactLink">Contact</base-button>
+      </header>
+      <router-view></router-view>
+    </base-card>
+  </section>
+  <section>
+    <base-card>
+      <base-badge
+        v-for="area in areas"
+        :key="area"
+        :type="area"
+        :title="area"
+      />
+      <p>{{ description }}</p>
+    </base-card>
+  </section>
+</template>
 
+<script>
 export default {
-  components: {
-    RouterView,
+  props: ['id'],
+  data() {
+    return {
+      selectedCoach: null,
+    };
+  },
+  created() {
+    this.selectedCoach = this.$store.getters['coaches/coaches'].find(
+      (coach) => coach.id === this.id
+    );
+  },
+  computed: {
+    fullName() {
+      return this.selectedCoach.firstName + ' ' + this.selectedCoach.lastName;
+    },
+    areas() {
+      return this.selectedCoach.areas;
+    },
+    rate() {
+      return this.selectedCoach.hourlyRate;
+    },
+    description() {
+      if (this.selectedCoach.description) {
+        return this.selectedCoach.description;
+      } else {
+        return 'Description not available';
+      }
+    },
+    coachContactLink() {
+      return this.$route.path + '/' + this.id + '/contact';
+    },
   },
 };
 </script>
-
-<template>
-  <h1>Coach Details</h1>
-  <RouterView />
-  <base-button link to="/coaches/c1/contact">Contact</base-button>
-</template>
