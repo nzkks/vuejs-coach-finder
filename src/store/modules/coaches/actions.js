@@ -1,7 +1,7 @@
 export default {
   registerCoach(context, payload) {
     const newCoach = {
-      id: 'c3',
+      id: context.rootGetters.userId,
       firstName: payload.firstName,
       lastName: payload.lastName,
       areas: payload.areas,
