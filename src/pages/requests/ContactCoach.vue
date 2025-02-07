@@ -75,11 +75,13 @@ export default {
       }
 
       const formData = {
+        coachId: this.$route.params.id,
         email: this.email.val,
         message: this.message.val,
       };
 
-      console.log(formData);
+      this.$store.dispatch('requests/contactCoach', formData);
+      this.$router.replace('/coaches');
     },
   },
 };
