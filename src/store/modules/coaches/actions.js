@@ -18,11 +18,12 @@ export default {
       }
     );
 
-    if (!response.ok) {
-      // error...
-    }
-
     // const responseData = await response.json();
+
+    if (!response.ok) {
+      const error = new Error(response.message || 'Failed to fetch!');
+      throw error;
+    }
 
     context.commit('registerCoach', {
       ...newCoach,
@@ -34,14 +35,14 @@ export default {
       'https://vue-http-demo-261a6-default-rtdb.asia-southeast1.firebasedatabase.app/coaches.json'
     );
 
-    if (!response.ok) {
-      // error...
-    }
-
     const responseData = await response.json();
 
-    const coaches = [];
+    if (!response.ok) {
+      const error = new Error(response.message || 'Failed to fetch!');
+      throw error;
+    }
 
+    const coaches = [];
     for (const key in responseData) {
       const coach = {
         id: key,
