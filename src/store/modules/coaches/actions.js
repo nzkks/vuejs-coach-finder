@@ -11,7 +11,7 @@ export default {
 
     // below creates a new table in firebase if it doesn't exist. If it does exist, it will update
     const response = await fetch(
-      `https://vue-http-demo-261a6-default-rtdb.asia-southeast1.firebasedatabase.app/${userId}.json`,
+      `https://vue-http-demo-261a6-default-rtdb.asia-southeast1.firebasedatabase.app/coaches/${userId}.json`,
       {
         method: 'PUT',
         body: JSON.stringify(newCoach),
