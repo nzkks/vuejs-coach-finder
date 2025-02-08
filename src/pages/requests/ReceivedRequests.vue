@@ -1,10 +1,14 @@
 <template>
+  <base-dialog :show="!!error" title="An error occurred!" @close="handleError"
+    ><p>{{ error }}</p></base-dialog
+  >
   <section>
     <base-card>
       <header>
         <h2>Requests Received</h2>
       </header>
-      <ul v-if="hasRequests">
+      <div v-if="isLoading"><base-spinner></base-spinner></div>
+      <ul v-else-if="hasRequests && !isLoading">
         <request-item
           v-for="req in receivedRequests"
           :key="req.id"
@@ -23,6 +27,29 @@ import RequestItem from '../../components/requests/RequestItem.vue';
 export default {
   components: {
     RequestItem,
+  },
+  data() {
+    return {
+      isLoading: false,
+      error: null,
+    };
+  },
+  created() {
+    this.loadRequests();
+  },
+  methods: {
+    async loadRequests() {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch('requests/loadRequests');
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+      this.isLoading = false;
+    },
+    handleError() {
+      this.error = null;
+    },
   },
   computed: {
     receivedRequests() {

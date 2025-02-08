@@ -25,4 +25,29 @@ export default {
 
     context.commit('addRequest', newRequest);
   },
+  async loadRequests(context) {
+    const coachId = context.rootGetters.userId;
+    const response = await fetch(
+      `https://vue-http-demo-261a6-default-rtdb.asia-southeast1.firebasedatabase.app/requests/${coachId}.json`
+    );
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      const error = new Error(response.message || 'Failed to fetch requests!');
+      throw error;
+    }
+
+    const requests = [];
+    for (const key in responseData) {
+      const request = {
+        id: key,
+        coachId: coachId,
+        userEmail: responseData[key].userEmail,
+        message: responseData[key].message,
+      };
+      requests.push(request);
+    }
+
+    context.commit('setRequests', requests);
+  },
 };
