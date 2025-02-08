@@ -10,6 +10,7 @@
           >Register as Coach</base-button
         >
       </div>
+      <div v-if="isLoading"><base-spinner></base-spinner></div>
       <ul v-if="hasCoaches">
         <li v-for="coach in filteredCoaches" :key="coach.id">
           <CoachItem
@@ -37,6 +38,7 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       activeFilters: {
         frontend: true,
         backend: true,
@@ -51,8 +53,10 @@ export default {
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
     },
-    loadCoaches() {
-      this.$store.dispatch('coaches/loadCoaches');
+    async loadCoaches() {
+      this.isLoading = true;
+      await this.$store.dispatch('coaches/loadCoaches');
+      this.isLoading = false;
     },
   },
   computed: {
