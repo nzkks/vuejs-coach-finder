@@ -51,6 +51,8 @@ export default {
     };
   },
   created() {
+    // this function is called when the component is created/re-rendered.
+    // But within the function the API call is made only when the last fetch happenned more than a minute ago
     this.loadCoaches();
   },
   methods: {

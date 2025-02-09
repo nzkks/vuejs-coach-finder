@@ -11,4 +11,14 @@ export default {
     const userId = rootGetters.userId;
     return coaches.some((coach) => coach.id === userId);
   },
+  shouldUpdate(state) {
+    const lastFetch = state.lastFetch;
+
+    if (!lastFetch) {
+      return true;
+    }
+
+    const currentTimeStamp = new Date().getTime(); // in ms
+    return (currentTimeStamp - lastFetch) / 1000 > 60; // convert the timestamp to seconds and compare. If the value is more than a minute, return true. That means update
+  },
 };
