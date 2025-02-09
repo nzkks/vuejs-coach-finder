@@ -6,7 +6,7 @@
         type="text"
         id="firstName"
         v-model.trim="firstName.val"
-        @blur="clearValidity('firstName')"
+        @blur="validateForm"
       />
       <div v-if="!firstName.isValid" className="error-text">
         First name must not be empty
@@ -18,7 +18,7 @@
         type="text"
         id="lastName"
         v-model.trim="lastName.val"
-        @blur="clearValidity('lastName')"
+        @blur="validateForm"
       />
       <div v-if="!lastName.isValid" className="error-text">
         Last name must not be empty
@@ -30,7 +30,7 @@
         id="description"
         rows="5"
         v-model.trim="description.val"
-        @blur="clearValidity('description')"
+        @blur="validateForm"
       ></textarea>
       <div v-if="!description.isValid" className="error-text">
         Description must not be empty
@@ -42,7 +42,7 @@
         type="number"
         id="rate"
         v-model.number="rate.val"
-        @blur="clearValidity('rate')"
+        @blur="validateForm"
       />
       <div v-if="!rate.isValid" className="error-text">
         Rate must be greater than 0
@@ -56,7 +56,7 @@
           id="frontend"
           value="frontend"
           v-model="areas.val"
-          @blur="clearValidity('areas')"
+          @blur="validateForm"
         />
         <label for="frontend">Frontend Development</label>
       </div>
@@ -66,7 +66,7 @@
           id="backend"
           value="backend"
           v-model="areas.val"
-          @blur="clearValidity('areas')"
+          @blur="validateForm"
         />
         <label for="backend">Backend Development</label>
       </div>
@@ -76,7 +76,7 @@
           id="career"
           value="career"
           v-model="areas.val"
-          @blur="clearValidity('areas')"
+          @blur="validateForm"
         />
         <label for="career">Career Advice</label>
         <div v-if="!areas.isValid" className="error-text">
@@ -120,22 +120,6 @@ export default {
     };
   },
   methods: {
-    clearValidity(input) {
-      this[input].isValid = true;
-
-      if (
-        this.firstName.isValid &&
-        this.lastName.isValid &&
-        this.areas.isValid &&
-        this.rate.isValid &&
-        this.description.isValid &&
-        this.areas.isValid
-      ) {
-        this.formIsValid = true;
-      } else {
-        this.formIsValid = false;
-      }
-    },
     validateForm() {
       this.formIsValid = true;
 

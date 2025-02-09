@@ -10,7 +10,7 @@
           type="email"
           id="email"
           v-model.trim="email.val"
-          @blur="clearValidity('email')"
+          @blur="validateForm"
         />
         <div v-if="!email.isValid" class="error-text">Email is required</div>
       </div>
@@ -20,7 +20,7 @@
           id="message"
           rows="5"
           v-model.trim="message.val"
-          @blur="clearValidity('message')"
+          @blur="validateForm"
         ></textarea>
         <div v-if="!message.isValid" class="error-text">
           Message is required
@@ -53,15 +53,6 @@ export default {
     };
   },
   methods: {
-    clearValidity(input) {
-      this[input].isValid = true;
-
-      if (this.email.isValid && this.message.isValid) {
-        this.formIsValid = true;
-      } else {
-        this.formIsValid = false;
-      }
-    },
     validateForm() {
       this.formIsValid = true;
 
