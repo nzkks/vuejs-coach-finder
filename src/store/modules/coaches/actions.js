@@ -11,7 +11,7 @@ export default {
 
     // below creates a new table in firebase if it doesn't exist. If it does exist, it will update
     const response = await fetch(
-      `https://vue-http-demo-261a6-default-rtdb.asia-southeast1.firebasedatabase.app/coaches/${userId}.json`,
+      `${process.env.VUE_APP_FIREBASE_URL}/coaches/${userId}.json`,
       {
         method: 'PUT',
         body: JSON.stringify(newCoach),
@@ -36,7 +36,7 @@ export default {
     }
 
     const response = await fetch(
-      'https://vue-http-demo-261a6-default-rtdb.asia-southeast1.firebasedatabase.app/coaches.json'
+      `${process.env.VUE_APP_FIREBASE_URL}/coaches.json`
     );
 
     const responseData = await response.json();

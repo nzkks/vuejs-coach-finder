@@ -6,7 +6,7 @@ export default {
     };
 
     const response = await fetch(
-      `https://vue-http-demo-261a6-default-rtdb.asia-southeast1.firebasedatabase.app/requests/${payload.coachId}.json`,
+      `${process.env.VUE_APP_FIREBASE_URL}/requests/${payload.coachId}.json`,
       {
         method: 'POST',
         body: JSON.stringify(newRequest),
@@ -28,7 +28,7 @@ export default {
   async loadRequests(context) {
     const coachId = context.rootGetters.userId;
     const response = await fetch(
-      `https://vue-http-demo-261a6-default-rtdb.asia-southeast1.firebasedatabase.app/requests/${coachId}.json`
+      `${process.env.VUE_APP_FIREBASE_URL}/requests/${coachId}.json`
     );
     const responseData = await response.json();
 
