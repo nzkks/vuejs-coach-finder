@@ -1,35 +1,39 @@
 <template>
-  <base-dialog :show="!!error" title="An error occurred!" @close="handleError"
-    ><p>{{ error }}</p></base-dialog
-  >
-  <form @submit.prevent="submitForm">
-    <div class="form-control" :class="{ invalid: !email.isValid }">
-      <label for="email">Your Email</label>
-      <input
-        type="email"
-        id="email"
-        v-model.trim="email.val"
-        @blur="clearValidity('email')"
-      />
-      <div v-if="!email.isValid" class="error-text">Email is required</div>
-    </div>
-    <div class="form-control" :class="{ invalid: !message.isValid }">
-      <label for="message">Message</label>
-      <textarea
-        id="message"
-        rows="5"
-        v-model.trim="message.val"
-        @blur="clearValidity('message')"
-      ></textarea>
-      <div v-if="!message.isValid" class="error-text">Message is required</div>
-    </div>
-    <p v-if="!formIsValid" class="error-text">
-      Please fix the above errors and submit again.
-    </p>
-    <div class="actions">
-      <base-button>Send Message</base-button>
-    </div>
-  </form>
+  <div>
+    <base-dialog :show="!!error" title="An error occurred!" @close="handleError"
+      ><p>{{ error }}</p></base-dialog
+    >
+    <form @submit.prevent="submitForm">
+      <div class="form-control" :class="{ invalid: !email.isValid }">
+        <label for="email">Your Email</label>
+        <input
+          type="email"
+          id="email"
+          v-model.trim="email.val"
+          @blur="clearValidity('email')"
+        />
+        <div v-if="!email.isValid" class="error-text">Email is required</div>
+      </div>
+      <div class="form-control" :class="{ invalid: !message.isValid }">
+        <label for="message">Message</label>
+        <textarea
+          id="message"
+          rows="5"
+          v-model.trim="message.val"
+          @blur="clearValidity('message')"
+        ></textarea>
+        <div v-if="!message.isValid" class="error-text">
+          Message is required
+        </div>
+      </div>
+      <p v-if="!formIsValid" class="error-text">
+        Please fix the above errors and submit again.
+      </p>
+      <div class="actions">
+        <base-button>Send Message</base-button>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
