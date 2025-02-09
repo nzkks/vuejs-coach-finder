@@ -88,7 +88,15 @@ export default {
       }
 
       try {
-        //
+        if (this.mode === 'login') {
+          //
+        } else {
+          await this.$store.dispatch('signup', {
+            email: this.email.val,
+            password: this.password.val,
+          });
+        }
+        this.$router.replace('/coaches');
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
