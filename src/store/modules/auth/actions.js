@@ -42,8 +42,7 @@ export default {
       throw error;
     }
 
-    // const expiresIn = +responseData.expiresIn * 1000; // + converts the string to a number. Also expiresIn is in seconds. So multiply it with 1000 makes milliseconds
-    const expiresIn = 5000;
+    const expiresIn = +responseData.expiresIn * 1000; // + converts the string to a number. Also expiresIn is in seconds. So multiply it with 1000 makes milliseconds
     const expirationDate = new Date().getTime() + expiresIn;
 
     localStorage.setItem('token', responseData.idToken);
@@ -51,7 +50,7 @@ export default {
     localStorage.setItem('tokenExpiration', expirationDate);
 
     timer = setTimeout(() => {
-      context.dispatch('logout');
+      context.dispatch('autologout');
     }, expiresIn);
 
     context.commit('setUser', {
@@ -71,7 +70,7 @@ export default {
     }
 
     timer = setTimeout(() => {
-      context.dispatch('logout');
+      context.dispatch('autologout');
     }, expiresIn);
 
     if (token && userId) {
@@ -92,5 +91,9 @@ export default {
       token: null,
       userId: null,
     });
+  },
+  autologout(context) {
+    context.dispatch('logout');
+    context.commit('setAutoLogout');
   },
 };
