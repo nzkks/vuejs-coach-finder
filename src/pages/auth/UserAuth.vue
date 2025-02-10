@@ -1,42 +1,57 @@
 <template>
-  <base-card>
-    <base-dialog :show="!!error" title="An error occurred!" @close="handleError"
-      ><p>{{ error }}</p></base-dialog
+  <div>
+    <base-dialog
+      :show="!!error"
+      title="An error occorred!"
+      @close="handleError"
     >
-    <form @submit.prevent="submitForm">
-      <div class="form-control" :class="{ invalid: !email.isValid }">
-        <label for="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          v-model.trim="email.val"
-          @blur="validateForm"
-        />
-        <div v-if="!email.isValid" class="error-text">Email is required</div>
-      </div>
-      <div class="form-control" :class="{ invalid: !password.isValid }">
-        <label for="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          v-model.trim="password.val"
-          @blur="validateForm"
-        />
-        <div v-if="!password.isValid" class="error-text">
-          Password is required
+      <p>{{ error }}</p>
+    </base-dialog>
+    <base-dialog :show="isLoading" title="Authenticating..." fixed>
+      <base-spinner></base-spinner>
+    </base-dialog>
+    <base-card>
+      <base-dialog
+        :show="!!error"
+        title="An error occurred!"
+        @close="handleError"
+        ><p>{{ error }}</p></base-dialog
+      >
+      <form @submit.prevent="submitForm">
+        <div class="form-control" :class="{ invalid: !email.isValid }">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            v-model.trim="email.val"
+            @blur="validateForm"
+          />
+          <div v-if="!email.isValid" class="error-text">Email is required</div>
         </div>
-      </div>
-      <p v-if="!formIsValid" class="error-text">
-        Please fix the above errors and submit again.
-      </p>
-      <div class="actions">
-        <base-button>{{ submitButtonCaption }}</base-button>
-        <base-button type="button" mode="flat" @click="switchAuthMode">{{
-          switchModeButtonCaption
-        }}</base-button>
-      </div>
-    </form></base-card
-  >
+        <div class="form-control" :class="{ invalid: !password.isValid }">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            v-model.trim="password.val"
+            @blur="validateForm"
+          />
+          <div v-if="!password.isValid" class="error-text">
+            Password is required
+          </div>
+        </div>
+        <p v-if="!formIsValid" class="error-text">
+          Please fix the above errors and submit again.
+        </p>
+        <div class="actions">
+          <base-button>{{ submitButtonCaption }}</base-button>
+          <base-button type="button" mode="flat" @click="switchAuthMode">{{
+            switchModeButtonCaption
+          }}</base-button>
+        </div>
+      </form></base-card
+    >
+  </div>
 </template>
 
 <script>
@@ -54,6 +69,7 @@ export default {
       mode: 'login',
       formIsValid: true,
       error: null,
+      isLoading: false,
     };
   },
   computed: {
@@ -87,6 +103,8 @@ export default {
         return;
       }
 
+      this.isLoading = true;
+
       try {
         if (this.mode === 'login') {
           //
@@ -98,8 +116,10 @@ export default {
         }
         this.$router.replace('/coaches');
       } catch (error) {
-        this.error = error.message || 'Something went wrong!';
+        this.error = error.message || 'Failed to authenticate!';
       }
+
+      this.isLoading = false;
     },
     switchAuthMode() {
       if (this.mode === 'login') {
