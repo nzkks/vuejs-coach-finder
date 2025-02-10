@@ -8,7 +8,6 @@ export default {
     return {
       token: null,
       userId: null,
-      tokenExpiration: null,
     };
   },
   mutations,

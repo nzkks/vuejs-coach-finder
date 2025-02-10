@@ -46,7 +46,6 @@ export default {
     context.commit('setUser', {
       token: responseData.idToken,
       userId: responseData.localId,
-      tokenExpiration: responseData.expiresIn,
     });
   },
   autoLogin(context) {
@@ -57,7 +56,6 @@ export default {
       context.commit('setUser', {
         token: token,
         userId: userId,
-        tokenExpiration: null,
       });
     }
   },
@@ -65,7 +63,6 @@ export default {
     context.commit('setUser', {
       token: null,
       userId: null,
-      tokenExpiration: null,
     });
   },
 };
