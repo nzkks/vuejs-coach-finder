@@ -1,6 +1,7 @@
 export default {
   async registerCoach(context, payload) {
     const userId = context.rootGetters.userId;
+    const token = context.rootGetters.token;
     const newCoach = {
       firstName: payload.firstName,
       lastName: payload.lastName,
@@ -11,7 +12,7 @@ export default {
 
     // below creates a new table in firebase if it doesn't exist. If it does exist, it will update
     const response = await fetch(
-      `${process.env.VUE_APP_FIREBASE_URL}/coaches/${userId}.json`,
+      `${process.env.VUE_APP_FIREBASE_URL}/coaches/${userId}.json?auth=${token}`,
       {
         method: 'PUT',
         body: JSON.stringify(newCoach),
